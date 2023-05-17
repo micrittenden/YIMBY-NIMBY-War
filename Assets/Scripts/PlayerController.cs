@@ -16,8 +16,10 @@ public class PlayerController : MonoBehaviour
     private float lowSpeed = 5.0f;
     private float maxSpeed = 15.0f;
     public bool slowedDown = false;
+    private float slowedTime = 5.0f;
     public bool poweredUp = false;
     public GameObject powerUpIndicator;
+    private float powerTime = 7.0f;
 
     private float maxStamina = 100;
     public float currentStamina;
@@ -41,7 +43,6 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<Animator>();
         playerAnim.SetFloat("Speed_f", idleAnim);
-        //playerAnim.SetFloat("Speed_f", runAnim);
         currentStamina = maxStamina;
         speed = baseSpeed;
     }
@@ -49,13 +50,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {       
-        // Game over
-        if (currentStamina <= 0)
-        {
-            gameOver = true;
-            playerAnim.SetFloat("Speed_f", idleAnim);
-            Debug.Log("The NIMBYs were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!");
-        }
+        // Check if the game is over
+        CheckGameOver();
 
         // Deplete stamina over time
         currentStamina = Mathf.Max(currentStamina - (depleteRateStamina * Time.deltaTime), 0f);
@@ -67,9 +63,16 @@ public class PlayerController : MonoBehaviour
         if (!gameOver)
         {
             MovePlayerRelativeToCamera();
+        }
+    }
 
-            // Move the power up to follow the player
-            powerUpIndicator.transform.position = transform.position + new Vector3(0, 0.1f, 0);
+    void CheckGameOver()
+    {
+        if (currentStamina <= 0)
+        {
+            gameOver = true;
+            playerAnim.SetFloat("Speed_f", idleAnim);
+            Debug.Log("The NIMBYs were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!");
         }
     }
 
@@ -110,6 +113,9 @@ public class PlayerController : MonoBehaviour
         {
             playerAnim.SetFloat("Speed_f", idleAnim);
         }
+
+        // Move the power up to follow the player
+        powerUpIndicator.transform.position = transform.position + new Vector3(0, 0.1f, 0);
     }
 
     // Trigger events for food, tokens, and power ups
@@ -192,7 +198,7 @@ public class PlayerController : MonoBehaviour
     // The slow down lasts for 5 seconds
     IEnumerator SlowedDownCountRoutine()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(slowedTime);
         slowedDown = false;
         speed = baseSpeed;
         playerAnim.SetFloat("Speed_f", runAnim);
@@ -201,7 +207,7 @@ public class PlayerController : MonoBehaviour
     // The power up lasts for 7 seconds
     IEnumerator PoweredUpCountRoutine()
     {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(powerTime);
         poweredUp = false;
         powerUpIndicator.gameObject.SetActive(false);
         speed = baseSpeed;

@@ -25,6 +25,11 @@ public class NimbyController : MonoBehaviour
 
     void FixedUpdate()
     {
+        MoveNimby();
+    }
+
+    void MoveNimby()
+    {
         if (playerControllerScript.gameOver == false)
         {
             Vector3 moveDirection = (player.transform.position - transform.position).normalized;
