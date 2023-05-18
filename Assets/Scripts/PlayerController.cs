@@ -6,11 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
 
+    // Player animation
     private Animator playerAnim;
     private float idleAnim = 0f;
     private float walkAnim = 0.3f;
     private float runAnim = 0.6f;
 
+    // Player speed and capabilities
     private float speed;
     private float baseSpeed = 10.0f;
     private float lowSpeed = 5.0f;
@@ -20,22 +22,6 @@ public class PlayerController : MonoBehaviour
     public bool poweredUp = false;
     public GameObject powerUpIndicator;
     private float powerTime = 7.0f;
-
-    private float maxStamina = 100.0f;
-    public float currentStamina;
-    private float depleteRateStamina = 1.0f;
-    public int score = 0;
-    public int tokenCount = 0;
-
-    private float foodValue = 30.0f;
-    private int foodPoints = 5;
-    private int tokenPoints = 10;
-    private int powerUpPoints = 20;
-    private int nimbyPoints = 40;
-    private int nimbyStaminaDecrease = 15;
-    private int nimbyTokenSteal = 2;
-
-    private UIManager uiManagerScript;
     
     void Start()
     {
@@ -43,20 +29,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<Animator>();
         playerAnim.SetFloat("Speed_f", idleAnim);
-        currentStamina = maxStamina;
         speed = baseSpeed;
-
-        // Decrease stamina starting immediately
-        InvokeRepeating("DepleteStamina", 0.00001f, depleteRateStamina);
-
-        // Connect UI
-        uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
-    }
-
-    void Update()
-    {       
-        // Check if the game is over
-        CheckGameOver();
     }
 
     void FixedUpdate()
@@ -66,24 +39,10 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayerRelativeToCamera();
         }
-    }
-
-    void CheckGameOver()
-    {
-        // End the game if the player stamina is 0
-        if (currentStamina <= 0)
+        else
         {
-            GameManager.Instance.GameOver(true);
-
             playerAnim.SetFloat("Speed_f", idleAnim);
-            Debug.Log("The NIMBYs were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!");
         }
-    }
-
-    void DepleteStamina()
-    {
-        currentStamina = currentStamina - depleteRateStamina;
-        uiManagerScript.UpdateStaminaUI(currentStamina);
     }
 
     void MovePlayerRelativeToCamera()
@@ -133,33 +92,15 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Food") && !GameManager.Instance.IsGameOver())
         {
-            if (currentStamina >= (maxStamina - foodValue))
-            {
-                currentStamina = maxStamina;
-            }
-            else if (currentStamina < (maxStamina - foodValue))
-            {
-                currentStamina += foodValue;
-            }
-
-            uiManagerScript.UpdateStaminaUI(currentStamina);
-
-            score += foodPoints;
-            uiManagerScript.UpdateScoreUI(score);
+            GameManager.Instance.EatFood();
 
             Destroy(other.gameObject);
-            Debug.Log("You eat some food.");
         }
         else if (other.CompareTag("Token") && !GameManager.Instance.IsGameOver())
         {
-            tokenCount++;
-            uiManagerScript.UpdateTokenUI(tokenCount);
-
-            score += tokenPoints;
-            uiManagerScript.UpdateScoreUI(score);
+            GameManager.Instance.PickUpToken();
 
             Destroy(other.gameObject);
-            Debug.Log("You pick up a token.");
         }
         else if (other.CompareTag("Power Up") && !GameManager.Instance.IsGameOver())
         {
@@ -167,13 +108,11 @@ public class PlayerController : MonoBehaviour
             powerUpIndicator.gameObject.SetActive(true);
             StartCoroutine(PoweredUpCountRoutine());
             playerAnim.SetFloat("Speed_f", runAnim);
-
-            score += powerUpPoints;
-            uiManagerScript.UpdateScoreUI(score);
-
             speed = maxSpeed;
+
+            GameManager.Instance.PowerUp();
+
             Destroy(other.gameObject);
-            Debug.Log("You power up!");
         }
     }
 
@@ -182,18 +121,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("NIMBY") && !GameManager.Instance.IsGameOver())
         {
-            Rigidbody nimbyRigidBody = collision.gameObject.GetComponent<Rigidbody>();
-            Vector3 nimbyAttack = collision.gameObject.transform.position - transform.position;
-            nimbyRigidBody.AddForce(nimbyAttack, ForceMode.Impulse);
-
             // Power to destroy NIMBYs
             if (poweredUp == true)
             {
-                score += nimbyPoints;
-                uiManagerScript.UpdateScoreUI(score);
+                GameManager.Instance.DestroyNimby();
 
-                Destroy(collision.gameObject);                
-                Debug.Log("The NIMBY yielded to socially productive growth!");
+                Destroy(collision.gameObject);
             }
             // NIMBYs slow you down if you are not powered up but their effect does not stack
             else if (!slowedDown && !poweredUp)
@@ -203,20 +136,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(SlowedDownCountRoutine());
                 playerAnim.SetFloat("Speed_f", walkAnim);
 
-                currentStamina -= nimbyStaminaDecrease;
-                uiManagerScript.UpdateStaminaUI(currentStamina);
-
-                tokenCount -= nimbyTokenSteal;
-                uiManagerScript.UpdateTokenUI(tokenCount);
-
-                if (tokenCount >= 0)
-                {
-                    Debug.Log("You collided with a NIMBY! They took some of your tokens!");
-                }
-                else if (tokenCount < 0)
-                {
-                    Debug.Log("You collided with a NIMBY! You are now in financial debt!");
-                }
+                GameManager.Instance.AttackedByNimby();
             }
         }
     }
