@@ -11,7 +11,6 @@ public class NimbyController : MonoBehaviour
     private float idleAnim = 0f;
 
     private GameObject player;
-    private PlayerController playerControllerScript;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +19,6 @@ public class NimbyController : MonoBehaviour
         enemyAnim = GetComponentInChildren<Animator>();
         enemyAnim.SetFloat("Speed_f", walkAnim);
         player = GameObject.Find("Player");
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     void FixedUpdate()

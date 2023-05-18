@@ -21,38 +21,42 @@ public class PlayerController : MonoBehaviour
     public GameObject powerUpIndicator;
     private float powerTime = 7.0f;
 
-    private float maxStamina = 100;
+    private float maxStamina = 100.0f;
     public float currentStamina;
-    private float depleteRateStamina = 1;
+    private float depleteRateStamina = 1.0f;
     public int score = 0;
     public int tokenCount = 0;
 
-    private float foodValue = 30;
+    private float foodValue = 30.0f;
     private int foodPoints = 5;
     private int tokenPoints = 10;
     private int powerUpPoints = 20;
     private int nimbyPoints = 40;
     private int nimbyStaminaDecrease = 15;
     private int nimbyTokenSteal = 2;
+
+    private UIManager uiManagerScript;
     
-    // Start is called before the first frame update
     void Start()
     {
+        // Set up the player
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<Animator>();
         playerAnim.SetFloat("Speed_f", idleAnim);
         currentStamina = maxStamina;
         speed = baseSpeed;
+
+        // Decrease stamina starting immediately
+        InvokeRepeating("DepleteStamina", 0.00001f, depleteRateStamina);
+
+        // Connect UI
+        uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {       
         // Check if the game is over
         CheckGameOver();
-
-        // Deplete stamina over time
-        currentStamina = Mathf.Max(currentStamina - (depleteRateStamina * Time.deltaTime), 0f);
     }
 
     void FixedUpdate()
@@ -74,6 +78,12 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetFloat("Speed_f", idleAnim);
             Debug.Log("The NIMBYs were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!");
         }
+    }
+
+    void DepleteStamina()
+    {
+        currentStamina = currentStamina - depleteRateStamina;
+        uiManagerScript.UpdateStaminaUI(currentStamina);
     }
 
     void MovePlayerRelativeToCamera()
@@ -131,14 +141,23 @@ public class PlayerController : MonoBehaviour
             {
                 currentStamina += foodValue;
             }
+
+            uiManagerScript.UpdateStaminaUI(currentStamina);
+
             score += foodPoints;
+            uiManagerScript.UpdateScoreUI(score);
+
             Destroy(other.gameObject);
             Debug.Log("You eat some food.");
         }
         else if (other.CompareTag("Token") && !GameManager.Instance.IsGameOver())
         {
             tokenCount++;
+            uiManagerScript.UpdateTokenUI(tokenCount);
+
             score += tokenPoints;
+            uiManagerScript.UpdateScoreUI(score);
+
             Destroy(other.gameObject);
             Debug.Log("You pick up a token.");
         }
@@ -150,6 +169,8 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetFloat("Speed_f", runAnim);
 
             score += powerUpPoints;
+            uiManagerScript.UpdateScoreUI(score);
+
             speed = maxSpeed;
             Destroy(other.gameObject);
             Debug.Log("You power up!");
@@ -169,6 +190,8 @@ public class PlayerController : MonoBehaviour
             if (poweredUp == true)
             {
                 score += nimbyPoints;
+                uiManagerScript.UpdateScoreUI(score);
+
                 Destroy(collision.gameObject);                
                 Debug.Log("The NIMBY yielded to socially productive growth!");
             }
@@ -181,7 +204,10 @@ public class PlayerController : MonoBehaviour
                 playerAnim.SetFloat("Speed_f", walkAnim);
 
                 currentStamina -= nimbyStaminaDecrease;
+                uiManagerScript.UpdateStaminaUI(currentStamina);
+
                 tokenCount -= nimbyTokenSteal;
+                uiManagerScript.UpdateTokenUI(tokenCount);
 
                 if (tokenCount >= 0)
                 {
@@ -211,11 +237,5 @@ public class PlayerController : MonoBehaviour
         poweredUp = false;
         powerUpIndicator.gameObject.SetActive(false);
         speed = baseSpeed;
-    }
-
-    // Keep track of the stamina, score, and tokens in the UI
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(20, 20, 200, 60), "Stamina: " + currentStamina + "\nScore: " + score + "\nTokens:" + tokenCount);
     }
 }

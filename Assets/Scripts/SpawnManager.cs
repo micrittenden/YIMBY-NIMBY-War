@@ -10,35 +10,30 @@ public class SpawnManager : MonoBehaviour
     public GameObject nimbyPrefab;
 
     // Basic spawn
-    private float spawnRange = 24;
+    private float spawnRange = 24.0f;
         
     // Food
-    private float spawnRangeFood = 20; // Affects NIMBYs as well by inverse
-    private float startDelayFood = 10;
-    private float spawnIntervalFood = 15;
+    private float spawnRangeFood = 20.0f; // Affects NIMBYs as well by inverse
+    private float startDelayFood = 10.0f;
+    private float spawnIntervalFood = 20.0f;
 
     // Token
-    private float startDelayToken = 1;
-    private float spawnIntervalToken = 5;
-    private float despawnToken = 60f;
+    private float startDelayToken = 1.0f;
+    private float spawnIntervalToken = 5.0f;
+    private float despawnToken = 60.0f;
 
     // Powerup
-    private float spawnRangePowerUp = 10;
-    private float startDelayPowerUp = 30;
-    private float spawnIntervalPowerUp = 120;
+    private float spawnRangePowerUp = 10.0f;
+    private float startDelayPowerUp = 30.0f;
+    private float spawnIntervalPowerUp = 120.0f;
 
     // Nimby
-    private float startDelayNimby = 5;
-    private float spawnIntervalNimby = 15;
-
-    // Prepare for accessing PlayerController
-    private PlayerController playerControllerScript;
+    private float startDelayNimby = 5.0f;
+    private float spawnIntervalNimby = 15.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-
         // Invoke custom functions to spawn prefabs on a timed interval
         InvokeRepeating("SpawnFood", startDelayFood, spawnIntervalFood);
         InvokeRepeating("SpawnToken", startDelayToken, spawnIntervalToken);
