@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour
     private int nimbyPoints = 40;
     private int nimbyStaminaDecrease = 15;
     private int nimbyTokenSteal = 2;
-
-    public bool gameOver;
     
     // Start is called before the first frame update
     void Start()
@@ -60,7 +58,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {        
         // Move the player
-        if (!gameOver)
+        if (!GameManager.Instance.IsGameOver())
         {
             MovePlayerRelativeToCamera();
         }
@@ -68,9 +66,11 @@ public class PlayerController : MonoBehaviour
 
     void CheckGameOver()
     {
+        // End the game if the player stamina is 0
         if (currentStamina <= 0)
         {
-            gameOver = true;
+            GameManager.Instance.GameOver(true);
+
             playerAnim.SetFloat("Speed_f", idleAnim);
             Debug.Log("The NIMBYs were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!");
         }
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
     // Trigger events for food, tokens, and power ups
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Food") && !gameOver)
+        if (other.CompareTag("Food") && !GameManager.Instance.IsGameOver())
         {
             if (currentStamina >= (maxStamina - foodValue))
             {
@@ -135,14 +135,14 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             Debug.Log("You eat some food.");
         }
-        else if (other.CompareTag("Token") && !gameOver)
+        else if (other.CompareTag("Token") && !GameManager.Instance.IsGameOver())
         {
             tokenCount++;
             score += tokenPoints;
             Destroy(other.gameObject);
             Debug.Log("You pick up a token.");
         }
-        else if (other.CompareTag("Power Up") && !gameOver)
+        else if (other.CompareTag("Power Up") && !GameManager.Instance.IsGameOver())
         {
             poweredUp = true;
             powerUpIndicator.gameObject.SetActive(true);
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
     // Trigger events for NIMBYs
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("NIMBY") && !gameOver)
+        if (collision.gameObject.CompareTag("NIMBY") && !GameManager.Instance.IsGameOver())
         {
             Rigidbody nimbyRigidBody = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 nimbyAttack = collision.gameObject.transform.position - transform.position;

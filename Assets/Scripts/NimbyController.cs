@@ -30,7 +30,7 @@ public class NimbyController : MonoBehaviour
 
     void MoveNimby()
     {
-        if (playerControllerScript.gameOver == false)
+        if (!GameManager.Instance.IsGameOver())
         {
             Vector3 moveDirection = (player.transform.position - transform.position).normalized;
 

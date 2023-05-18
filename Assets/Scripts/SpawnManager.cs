@@ -49,7 +49,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn food randomly into the play area
     void SpawnFood()
     {
-        if (playerControllerScript.gameOver == false)
+        if (!GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, Random.Range(spawnRangeFood, spawnRange));
 
@@ -60,7 +60,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn token randomly into the play area
     void SpawnToken()
     {
-        if (playerControllerScript.gameOver == false)
+        if (!GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, Random.Range(-spawnRange, spawnRange));
 
@@ -74,7 +74,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn power up randomly into the play area
     void SpawnPowerUp()
     {
-        if (playerControllerScript.gameOver == false)
+        if (!GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRangePowerUp, spawnRangePowerUp), 1, Random.Range(-spawnRangePowerUp, spawnRangePowerUp));
 
@@ -85,7 +85,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn NIMBYs randomly into the play area
     void SpawnNimby()
     {
-        if (playerControllerScript.gameOver == false)
+        if (!GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 0.5f, Random.Range(-spawnRange, spawnRangeFood));
 
