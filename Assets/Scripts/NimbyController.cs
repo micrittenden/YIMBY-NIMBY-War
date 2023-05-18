@@ -23,22 +23,22 @@ public class NimbyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        MoveNimby();
-    }
-
-    void MoveNimby()
-    {
-        if (!GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
-            Vector3 moveDirection = (player.transform.position - transform.position).normalized;
-
-            enemyRb.MovePosition(transform.position + (moveDirection * speed *Time.deltaTime));
-
-            transform.rotation = Quaternion.LookRotation(moveDirection);
+            MoveNimby();
         }
         else
         {
             enemyAnim.SetFloat("Speed_f", idleAnim);
         }
+    }
+
+    void MoveNimby()
+    {
+        Vector3 moveDirection = (player.transform.position - transform.position).normalized;
+
+        enemyRb.MovePosition(transform.position + (moveDirection * speed *Time.deltaTime));
+
+        transform.rotation = Quaternion.LookRotation(moveDirection);
     }
 }

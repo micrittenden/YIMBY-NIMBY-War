@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {        
         // Move the player
-        if (!GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             MovePlayerRelativeToCamera();
         }
@@ -90,19 +90,19 @@ public class PlayerController : MonoBehaviour
     // Trigger events for food, tokens, and power ups
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Food") && !GameManager.Instance.IsGameOver())
+        if (other.CompareTag("Food") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             GameManager.Instance.EatFood();
 
             Destroy(other.gameObject);
         }
-        else if (other.CompareTag("Token") && !GameManager.Instance.IsGameOver())
+        else if (other.CompareTag("Token") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             GameManager.Instance.PickUpToken();
 
             Destroy(other.gameObject);
         }
-        else if (other.CompareTag("Power Up") && !GameManager.Instance.IsGameOver())
+        else if (other.CompareTag("Power Up") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             poweredUp = true;
             powerUpIndicator.gameObject.SetActive(true);
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
     // Trigger events for NIMBYs
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("NIMBY") && !GameManager.Instance.IsGameOver())
+        if (collision.gameObject.CompareTag("NIMBY") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             // Power to destroy NIMBYs
             if (poweredUp == true)

@@ -31,8 +31,7 @@ public class SpawnManager : MonoBehaviour
     private float startDelayNimby = 5.0f;
     private float spawnIntervalNimby = 15.0f;
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartSpawn()
     {
         // Invoke custom functions to spawn prefabs on a timed interval
         InvokeRepeating("SpawnFood", startDelayFood, spawnIntervalFood);
@@ -44,7 +43,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn food randomly into the play area
     void SpawnFood()
     {
-        if (!GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, Random.Range(spawnRangeFood, spawnRange));
 
@@ -55,7 +54,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn token randomly into the play area
     void SpawnToken()
     {
-        if (!GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, Random.Range(-spawnRange, spawnRange));
 
@@ -69,7 +68,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn power up randomly into the play area
     void SpawnPowerUp()
     {
-        if (!GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRangePowerUp, spawnRangePowerUp), 1, Random.Range(-spawnRangePowerUp, spawnRangePowerUp));
 
@@ -80,7 +79,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn NIMBYs randomly into the play area
     void SpawnNimby()
     {
-        if (!GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 0.5f, Random.Range(-spawnRange, spawnRangeFood));
 

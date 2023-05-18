@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Set up the instance
+    // Prepare to set up the instance
     private static GameManager _instance;
     public static GameManager Instance
     {
@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Connect to UI
+    // Connect to UI and SpawnManager
     private UIManager uiManagerScript;
+    private SpawnManager spawnManagerScript;
 
     // Stats
     public float currentStamina;
@@ -38,20 +39,69 @@ public class GameManager : MonoBehaviour
     private int nimbyStaminaDecrease = 15;
     private int nimbyTokenSteal = 2;
 
+    // Game active classes to pause game while menus are open
+    public bool _isGameActive;
+
+    public void GameActive(bool flag)
+    {
+        _isGameActive = flag;
+    }
+
+    public bool IsGameActive()
+    {
+        return _isGameActive;
+    }
+
+    // Game over classes to end game
+    public bool _isGameOver;
+
+    public void GameOver(bool flag)
+    {
+        _isGameOver = flag;
+    }
+
+    public bool IsGameOver()
+    {
+        return _isGameOver;
+    }
+    
+    // Set up the instance
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     void Start()
     {
+        // Connect UI
+        uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
+        spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+    }
+
+    // Start the game when the start button is clicked
+    public void StartGame()
+    {
+        // Turn off the title menu
+        uiManagerScript.TitleScreenOff();
+
+        // Set game to active
+        GameActive(true);
+
         // Set stamina and start depleting immediately
         currentStamina = maxStamina;
         InvokeRepeating("DepleteStamina", 0.00001f, depleteRateStamina);
-        
-        // Connect UI
-        uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        // Start spawning
+        spawnManagerScript.StartSpawn();
     }
 
     void Update()
-    {       
-        // Check if the game is over
-        CheckGameOver();
+    {
+        if (IsGameActive())
+        {
+            // Check if the game is over
+            CheckGameOver();
+        }
     }
 
     void CheckGameOver()
@@ -59,11 +109,12 @@ public class GameManager : MonoBehaviour
         // End the game if the player stamina is 0
         if (currentStamina <= 0)
         {
+            GameActive(false);
             GameOver(true);
 
-            CancelInvoke("DepleteStamina");
+            uiManagerScript.GameOverScreenOn();
 
-             // Reset in case NIMBYs hit the player at the end
+            // Reset stamina to 0
             currentStamina = 0;
             uiManagerScript.UpdateStaminaUI(currentStamina);
 
@@ -73,8 +124,11 @@ public class GameManager : MonoBehaviour
 
     void DepleteStamina()
     {
-        currentStamina = currentStamina - depleteRateStamina;
-        uiManagerScript.UpdateStaminaUI(currentStamina);
+        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
+        {
+            currentStamina = currentStamina - depleteRateStamina;
+            uiManagerScript.UpdateStaminaUI(currentStamina);
+        }
     }
 
     public void EatFood()
@@ -139,23 +193,5 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("You were attacked by a NIMBY! You are now in financial debt!");
         }
-    }
-
-    // Game over classes
-    public bool _isGameOver;
-
-    private void Awake()
-    {
-        _instance = this;
-    }
-
-    public void GameOver(bool flag)
-    {
-        _isGameOver = flag;
-    }
-
-    public bool IsGameOver()
-    {
-        return _isGameOver;
     }
 }
