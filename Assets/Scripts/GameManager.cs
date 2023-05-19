@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Connect to UI and SpawnManager
+    // Connect to UI, SoundEffects, and SpawnManager
     private UIManager uiManagerScript;
+    private SoundEffects soundEffectsScript;
     private SpawnManager spawnManagerScript;
 
     // Stats
@@ -73,8 +74,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Connect UI
+        // Connect UI, SoundEffects, and SpawnManager
         uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
+        soundEffectsScript = GameObject.Find("Player").GetComponent<SoundEffects>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
 
@@ -124,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     void DepleteStamina()
     {
-        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
+        if (IsGameActive() && !IsGameOver())
         {
             currentStamina = currentStamina - depleteRateStamina;
             uiManagerScript.UpdateStaminaUI(currentStamina);
@@ -133,25 +135,29 @@ public class GameManager : MonoBehaviour
 
     public void EatFood()
     {
+        soundEffectsScript.playOtherSound();
+
         if (currentStamina >= (maxStamina - foodValue))
-            {
-                currentStamina = maxStamina;
-            }
-            else if (currentStamina < (maxStamina - foodValue))
-            {
-                currentStamina += foodValue;
-            }
+        {
+            currentStamina = maxStamina;
+        }
+        else if (currentStamina < (maxStamina - foodValue))
+        {
+            currentStamina += foodValue;
+        }
 
-            uiManagerScript.UpdateStaminaUI(currentStamina);
+        uiManagerScript.UpdateStaminaUI(currentStamina);
 
-            score += foodPoints;
-            uiManagerScript.UpdateScoreUI(score);
+        score += foodPoints;
+        uiManagerScript.UpdateScoreUI(score);
 
-            Debug.Log("You eat some food.");
+        Debug.Log("You eat some food.");
     }
 
     public void PickUpToken()
     {
+        soundEffectsScript.playTokenSound();
+
         tokenCount++;
         uiManagerScript.UpdateTokenUI(tokenCount);
 
@@ -163,6 +169,8 @@ public class GameManager : MonoBehaviour
 
     public void PowerUp()
     {
+        soundEffectsScript.playOtherSound();
+
         score += powerUpPoints;
         uiManagerScript.UpdateScoreUI(score);
         
@@ -171,6 +179,8 @@ public class GameManager : MonoBehaviour
 
     public void DestroyNimby()
     {
+        soundEffectsScript.playDestroyNimbySound();
+
         score += nimbyPoints;
         uiManagerScript.UpdateScoreUI(score);
         
@@ -179,6 +189,8 @@ public class GameManager : MonoBehaviour
 
     public void AttackedByNimby()
     {
+        soundEffectsScript.playNimbyAttackSound();
+
         currentStamina -= nimbyStaminaDecrease;
         uiManagerScript.UpdateStaminaUI(currentStamina);
 

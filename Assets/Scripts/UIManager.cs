@@ -11,10 +11,15 @@ using TMPro;
 [DefaultExecutionOrder(1000)]
 public class UIManager : MonoBehaviour
 {
+    // The UI buttons have OnClick() components added via the Inspector to change between screens
+    // The stats are updated via classes in the GameManager script
+
+    // Stats
     [SerializeField] TMP_Text staminaText;
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text tokenText;
 
+    // Screens
     public GameObject TitleScreen;
     public GameObject SettingsScreen;
     public GameObject MainScreen;
