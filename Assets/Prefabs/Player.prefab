@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644d40d8944632e489c87b4dc1e2a7b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpIndicator: {fileID: 0}
+  powerUpIndicator: {fileID: 5395629733842814470, guid: a2cb645a38dd7cc43a555cf474141d27, type: 3}
 --- !u!82 &7698494665399727954
 AudioSource:
   m_ObjectHideFlags: 0

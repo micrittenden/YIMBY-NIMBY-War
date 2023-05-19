@@ -15,7 +15,10 @@ public class UIManager : MonoBehaviour
     // The stats are updated via classes in the GameManager script
 
     // Stats
-    [SerializeField] TMP_Text staminaText;
+    public Slider staminaSlider;
+    public Gradient staminaGradient;
+    public Image staminaFill;
+
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text tokenText;
 
@@ -46,9 +49,20 @@ public class UIManager : MonoBehaviour
         #endif
     }
 
-    public void UpdateStaminaUI(float currentStamina)
+    public void SetMaxStaminaUI(int maxStamina)
     {
-        staminaText.text = "Stamina: " + currentStamina;
+        staminaSlider.maxValue = maxStamina;
+        staminaSlider.value = maxStamina;
+
+        staminaFill.color = staminaGradient.Evaluate(1.0f);
+    }
+
+    public void UpdateStaminaUI(int currentStamina)
+    {
+        staminaSlider.value = currentStamina;
+
+        staminaFill.color = staminaGradient.Evaluate(staminaSlider.normalizedValue);
+
     }
 
     public void UpdateScoreUI(float score)

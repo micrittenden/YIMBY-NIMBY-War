@@ -25,14 +25,14 @@ public class GameManager : MonoBehaviour
     private SpawnManager spawnManagerScript;
 
     // Stats
-    public float currentStamina;
+    public int currentStamina;
     public int score = 0;
     public int tokenCount = 0;
 
     // Gameplay values
-    private float maxStamina = 100.0f;
-    private float depleteRateStamina = 1.0f;
-    private float foodValue = 30.0f;
+    private int maxStamina = 100;
+    private int depleteRateStamina = 1;
+    private int foodValue = 30;
     private int foodPoints = 5;
     private int tokenPoints = 10;
     private int powerUpPoints = 20;
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
         GameActive(true);
 
         // Set stamina and start depleting immediately
-        currentStamina = maxStamina;
+        SetMaxStamina(maxStamina);
         InvokeRepeating("DepleteStamina", 0.00001f, depleteRateStamina);
 
         // Start spawning
@@ -122,6 +122,12 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("The NIMBYs were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!");
         }
+    }
+
+    void SetMaxStamina(int maxStamina)
+    {
+        currentStamina = maxStamina;
+        uiManagerScript.SetMaxStaminaUI(maxStamina);
     }
 
     void DepleteStamina()
