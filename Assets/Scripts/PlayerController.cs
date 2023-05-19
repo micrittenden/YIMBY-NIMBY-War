@@ -17,11 +17,11 @@ public class PlayerController : MonoBehaviour
     private float baseSpeed = 10.0f;
     private float lowSpeed = 5.0f;
     private float maxSpeed = 15.0f;
-    public bool slowedDown = false;
+    private bool slowedDown;
     private float slowedTime = 5.0f;
-    public bool poweredUp = false;
-    public GameObject powerUpIndicator;
+    private bool poweredUp;
     private float powerTime = 7.0f;
+    public GameObject powerUpIndicator;
     
     void Start()
     {
@@ -72,6 +72,10 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnim.SetFloat("Speed_f", runAnim);
             }
+            else if (slowedDown)
+            {
+                playerAnim.SetFloat("Speed_f", walkAnim);
+            }
             
             playerRb.MovePosition(transform.position + cameraRelativeMovement * speed * Time.deltaTime);
 
@@ -104,13 +108,14 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.CompareTag("Power Up") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
+            slowedDown = false;
             poweredUp = true;
             powerUpIndicator.gameObject.SetActive(true);
-            StartCoroutine(PoweredUpCountRoutine());
-            playerAnim.SetFloat("Speed_f", runAnim);
             speed = maxSpeed;
 
             GameManager.Instance.PowerUp();
+
+            StartCoroutine(PoweredUpCountRoutine());
 
             Destroy(other.gameObject);
         }
@@ -122,21 +127,21 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("NIMBY") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             // Power to destroy NIMBYs
-            if (poweredUp == true)
+            if (poweredUp)
             {
                 GameManager.Instance.DestroyNimby();
 
                 Destroy(collision.gameObject);
             }
-            // NIMBYs slow you down if you are not powered up but their effect does not stack
+            // NIMBYs attack you if you are not powered up but their effect does not stack
             else if (!slowedDown && !poweredUp)
             {
                 slowedDown = true;
                 speed = lowSpeed;
-                StartCoroutine(SlowedDownCountRoutine());
-                playerAnim.SetFloat("Speed_f", walkAnim);
 
                 GameManager.Instance.AttackedByNimby();
+
+                StartCoroutine(SlowedDownCountRoutine());
             }
         }
     }
@@ -147,7 +152,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(slowedTime);
         slowedDown = false;
         speed = baseSpeed;
-        playerAnim.SetFloat("Speed_f", runAnim);
     }
 
     // The power up lasts for 7 seconds

@@ -17,7 +17,6 @@ public class NimbyController : MonoBehaviour
     {
         enemyRb = GetComponent<Rigidbody>();
         enemyAnim = GetComponentInChildren<Animator>();
-        enemyAnim.SetFloat("Speed_f", walkAnim);
         player = GameObject.Find("Player");
     }
 
@@ -35,6 +34,8 @@ public class NimbyController : MonoBehaviour
 
     void MoveNimby()
     {
+        enemyAnim.SetFloat("Speed_f", walkAnim);
+
         Vector3 moveDirection = (player.transform.position - transform.position).normalized;
 
         enemyRb.MovePosition(transform.position + (moveDirection * speed *Time.deltaTime));
