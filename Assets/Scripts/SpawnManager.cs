@@ -81,7 +81,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
-            Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 0.5f, Random.Range(-spawnRange, spawnRangeFood));
+            Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRangeFood));
 
             Instantiate(nimbyPrefab, spawnPos, nimbyPrefab.transform.rotation);
         }

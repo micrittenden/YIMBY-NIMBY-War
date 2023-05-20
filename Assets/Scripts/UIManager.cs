@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text tokenText;
+    [SerializeField] TMP_Text gameOverText;
 
     // Screens
     public GameObject TitleScreen;
@@ -65,12 +66,12 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void UpdateScoreUI(float score)
+    public void UpdateScoreUI(int score)
     {
         scoreText.text = "Score: " + score;
     }
 
-    public void UpdateTokenUI(float tokenCount)
+    public void UpdateTokenUI(int tokenCount)
     {
         tokenText.text = "Tokens: " + tokenCount;
     }
@@ -117,6 +118,17 @@ public class UIManager : MonoBehaviour
     {
         MenuScreen.SetActive(false);
         GameManager.Instance.GameActive(true);
+    }
+
+    public void MenuScreenQuit()
+    {
+        MenuScreen.SetActive(false);
+        GameManager.Instance.GameOver(true);
+    }
+
+    public void UpdateGameOverUI(int nimbyCount, int score)
+    {
+        gameOverText.text = "You defeated " + nimbyCount + " NIMBYs, but in the end they were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!";
     }
 
     public void GameOverScreenOn()

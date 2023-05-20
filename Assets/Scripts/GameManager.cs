@@ -28,15 +28,16 @@ public class GameManager : MonoBehaviour
     public int currentStamina;
     public int score = 0;
     public int tokenCount = 0;
+    public int nimbyCount = 0;
 
     // Gameplay values
     private int maxStamina = 100;
     private int depleteRateStamina = 1;
     private int foodValue = 30;
-    private int foodPoints = 5;
-    private int tokenPoints = 10;
-    private int powerUpPoints = 20;
-    private int nimbyPoints = 40;
+    private int foodPoints = 50;
+    private int tokenPoints = 100;
+    private int powerUpPoints = 150;
+    private int nimbyPoints = 250;
     private int nimbyStaminaDecrease = 15;
     private int nimbyTokenSteal = 2;
 
@@ -59,6 +60,14 @@ public class GameManager : MonoBehaviour
     public void GameOver(bool flag)
     {
         _isGameOver = flag;
+
+        // Reset stamina to 0 in case the player got hit at the end
+        currentStamina = 0;
+        uiManagerScript.UpdateStaminaUI(currentStamina);
+
+        uiManagerScript.UpdateGameOverUI(nimbyCount, score);
+
+        uiManagerScript.GameOverScreenOn();
     }
 
     public bool IsGameOver()
@@ -113,14 +122,6 @@ public class GameManager : MonoBehaviour
         {
             GameActive(false);
             GameOver(true);
-
-            uiManagerScript.GameOverScreenOn();
-
-            // Reset stamina to 0
-            currentStamina = 0;
-            uiManagerScript.UpdateStaminaUI(currentStamina);
-
-            Debug.Log("The NIMBYs were too powerful. You retire from your quest to make cities more sustainable, livable, and affordable. You finished with a score of " + score + ". Not bad, but you could do better!");
         }
     }
 
@@ -187,6 +188,7 @@ public class GameManager : MonoBehaviour
     {
         soundEffectsScript.playDestroyNimbySound();
 
+        nimbyCount++;
         score += nimbyPoints;
         uiManagerScript.UpdateScoreUI(score);
         

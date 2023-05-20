@@ -40,17 +40,17 @@ public class SoundEffects : MonoBehaviour
 
     public void playClickSound()
     {
-        clickAudio.PlayOneShot(clickSound, 1.0f);
+        clickAudio.PlayOneShot(clickSound);
     }
 
     public void playTokenSound()
     {
-        tokenAudio.PlayOneShot(tokenSound, 1.0f);
+        tokenAudio.PlayOneShot(tokenSound);
     }
 
     public void playOtherSound()
     {
-        otherAudio.PlayOneShot(otherSound, 1.0f);
+        otherAudio.PlayOneShot(otherSound);
     }
 
     public void playDestroyNimbySound()
