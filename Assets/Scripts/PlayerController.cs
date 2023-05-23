@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody playerRb;
+    private float kMinMoveDistance = 0.01f;
+    private float kMaxDistFromNavMesh = 0.3f;
 
     // Player animation
     private Animator playerAnim;
@@ -14,22 +17,21 @@ public class PlayerController : MonoBehaviour
 
     // Player speed and capabilities
     private float speed;
-    private float baseSpeed = 10.0f;
-    private float lowSpeed = 5.0f;
-    private float maxSpeed = 15.0f;
+    private float baseSpeed = 6.0f;
+    private float lowSpeed = 3.0f;
+    private float maxSpeed = 9.0f;
     private bool slowedDown;
     private float slowedTime = 5.0f;
     private bool poweredUp;
     private float powerTime = 7.0f;
     public GameObject powerUpIndicator;
-    
+
     void Start()
     {
         // Set up the player
-        playerRb = GetComponent<Rigidbody>();
+        speed = baseSpeed;
         playerAnim = GetComponentInChildren<Animator>();
         playerAnim.SetFloat("Speed_f", idleAnim);
-        speed = baseSpeed;
     }
 
     void FixedUpdate()
@@ -45,7 +47,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void MovePlayerRelativeToCamera()
+    private void MovePlayerRelativeToCamera()
     {
         // Get player input
         float playerVerticalInput = Input.GetAxis("Vertical");
@@ -76,18 +78,30 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnim.SetFloat("Speed_f", walkAnim);
             }
-            
-            playerRb.MovePosition(transform.position + cameraRelativeMovement * speed * Time.deltaTime);
 
-            // Rotate the player in accordance with player movement
-            transform.rotation = Quaternion.LookRotation(cameraRelativeMovement);
+            Vector3 inputMoveDelta = cameraRelativeMovement * speed * Time.deltaTime;
+            Vector3 desiredPosition = transform.position + inputMoveDelta;
+
+            // Check if the desired position produces a valid movement
+            NavMeshHit hit;
+            bool isValid = NavMesh.SamplePosition(desiredPosition, out hit, kMaxDistFromNavMesh, NavMesh.AllAreas);
+            if (isValid)
+            {
+                // Check if it is enough movement
+                if (Vector3.Distance(transform.position, hit.position) > kMinMoveDistance)
+                {
+                    transform.position = hit.position;
+                    transform.rotation = Quaternion.LookRotation(cameraRelativeMovement);
+                }
+            }
         }
         else
         {
+            // No input from player
             playerAnim.SetFloat("Speed_f", idleAnim);
         }
 
-        // Move the power up to follow the player
+        // Move the power up indicator to follow the player
         powerUpIndicator.transform.position = transform.position + new Vector3(0, 0.1f, 0);
         powerUpIndicator.transform.RotateAround(transform.position, new Vector3(0, -1, 0), 90 * Time.deltaTime);
     }
