@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4308102465679187267}
   - component: {fileID: 2030423145728059785}
   - component: {fileID: 4222009338528241918}
+  - component: {fileID: 2309725387888580}
   m_Layer: 0
   m_Name: Token
   m_TagString: Token
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 517209616308078684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,3 +98,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.36306316, y: 0.50591993, z: 0.0733182}
   m_Center: {x: -0.00095102936, y: 0.0054045543, z: 0.000004550442}
+--- !u!114 &2309725387888580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517209616308078684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d0b47968670654eba21ac94d0b80f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 90
+  rotationDirection: {x: 0, y: -1, z: 0}

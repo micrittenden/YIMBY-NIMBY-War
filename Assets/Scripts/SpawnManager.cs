@@ -11,6 +11,7 @@ public class SpawnManager : MonoBehaviour
 
     // Basic spawn
     private float spawnRange = 24.0f;
+    private float spawnY = 0.8f;
         
     // Food
     private float spawnRangeFood = 20.0f; // Affects NIMBYs as well by inverse
@@ -45,7 +46,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
-            Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, Random.Range(spawnRangeFood, spawnRange));
+            Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), spawnY, Random.Range(spawnRangeFood, spawnRange));
 
             Instantiate(foodPrefab, spawnPos, foodPrefab.transform.rotation);
         }
@@ -56,7 +57,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
-            Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, Random.Range(-spawnRange, spawnRange));
+            Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), spawnY, Random.Range(-spawnRange, spawnRange));
 
             // Instantiate as a named GameObject so that I can destroy it after a minute if it has not already been picked up
             GameObject token = Instantiate(tokenPrefab, spawnPos, tokenPrefab.transform.rotation) as GameObject;
@@ -70,7 +71,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
-            Vector3 spawnPos = new Vector3(Random.Range(-spawnRangePowerUp, spawnRangePowerUp), 1, Random.Range(-spawnRangePowerUp, spawnRangePowerUp));
+            Vector3 spawnPos = new Vector3(Random.Range(-spawnRangePowerUp, spawnRangePowerUp), spawnY, Random.Range(-spawnRangePowerUp, spawnRangePowerUp));
 
             Instantiate(powerUpPrefab, spawnPos, powerUpPrefab.transform.rotation);
         }

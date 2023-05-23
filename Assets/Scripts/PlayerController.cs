@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour
 
         // Move the power up to follow the player
         powerUpIndicator.transform.position = transform.position + new Vector3(0, 0.1f, 0);
+        powerUpIndicator.transform.RotateAround(transform.position, new Vector3(0, -1, 0), 90 * Time.deltaTime);
     }
 
     // Trigger events for food, tokens, and power ups
