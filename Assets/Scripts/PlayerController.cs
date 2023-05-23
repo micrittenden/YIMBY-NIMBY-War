@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool slowedDown;
     private float slowedTime = 5.0f;
     private bool poweredUp;
-    private float powerTime = 7.0f;
+    private float powerTime = 30.0f;
     public GameObject powerUpIndicator;
 
     void Start()
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
     }
 
-    // The power up lasts for 7 seconds
+    // The power up lasts for 30 seconds
     IEnumerator PoweredUpCountRoutine()
     {
         yield return new WaitForSeconds(powerTime);

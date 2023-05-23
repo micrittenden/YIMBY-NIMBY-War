@@ -31,14 +31,14 @@ public class GameManager : MonoBehaviour
     public int nimbyCount = 0;
 
     // Gameplay values
-    private int maxStamina = 100;
+    private int maxStamina = 300;
     private int depleteRateStamina = 1;
-    private int foodValue = 30;
+    private int foodValue = 60;
     private int foodPoints = 50;
-    private int tokenPoints = 100;
-    private int powerUpPoints = 150;
-    private int nimbyPoints = 250;
-    private int nimbyStaminaDecrease = 15;
+    private int tokenPoints = 300;
+    private int powerUpPoints = 350;
+    private int nimbyPoints = 600;
+    private int nimbyStaminaDecrease = 60;
     private int nimbyTokenSteal = 2;
 
     // Game active classes to pause game while menus are open

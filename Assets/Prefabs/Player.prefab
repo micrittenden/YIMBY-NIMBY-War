@@ -1275,6 +1275,7 @@ GameObject:
   - component: {fileID: 7071717535723167981}
   - component: {fileID: 7071717535723167982}
   - component: {fileID: 7071717535723167980}
+  - component: {fileID: 1900112565}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1358,8 +1359,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3555329, y: 2.8769639, z: 1.052084}
-  m_Center: {x: 0.006510496, y: 1.4300674, z: 0}
+  m_Size: {x: 1.2267852, y: 2.8769639, z: 0.8075757}
+  m_Center: {x: -0.0063642263, y: 1.4300674, z: 0.0063934326}
 --- !u!82 &7071717535723167981
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1468,7 +1469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078c1a9090a53844f8e0dde5899dc77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: b9f0c283bed9b4ce29f3ba7ca4c2edc4, type: 3}
+  clickSound: {fileID: 8300000, guid: d04cbba9bbc6348ee871b50836a12812, type: 3}
   tokenSound: {fileID: 8300000, guid: f928159802e324af2b95417fa6ce3fdf, type: 3}
   otherSound: {fileID: 8300000, guid: 6f1637b41d770415d9d1e6a33a1db4c8, type: 3}
   destroyNimbySound: {fileID: 8300000, guid: 9c87f285d32fa4569b77ddf3a7e6df5e, type: 3}
@@ -1485,7 +1486,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644d40d8944632e489c87b4dc1e2a7b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpIndicator: {fileID: 5395629733842814470, guid: a2cb645a38dd7cc43a555cf474141d27, type: 3}
+  powerUpIndicator: {fileID: 0}
+--- !u!195 &1900112565
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071717535723267664}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 1
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7071717535723267668
 GameObject:
   m_ObjectHideFlags: 0
