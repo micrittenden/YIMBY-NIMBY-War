@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private UIManager uiManagerScript;
     private SoundEffects soundEffectsScript;
     private SpawnManager spawnManagerScript;
+    private NimbySpawn nimbySpawnScript;
 
     // Stats
     public int currentStamina;
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour
         uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
         soundEffectsScript = GameObject.Find("Player").GetComponent<SoundEffects>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        nimbySpawnScript = GameObject.Find("SpawnManager").GetComponent<NimbySpawn>();
     }
 
     // Start the game when the start button is clicked
@@ -104,6 +106,8 @@ public class GameManager : MonoBehaviour
 
         // Start spawning
         spawnManagerScript.StartSpawn();
+        nimbySpawnScript.StartSpawn();
+
     }
 
     void Update()

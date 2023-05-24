@@ -7,7 +7,6 @@ public class SpawnManager : MonoBehaviour
     public GameObject foodPrefab;
     public GameObject tokenPrefab;
     public GameObject powerUpPrefab;
-    public GameObject nimbyPrefab;
 
     // Basic spawn
     private float spawnRange = 24.0f;
@@ -28,17 +27,12 @@ public class SpawnManager : MonoBehaviour
     private float startDelayPowerUp = 30.0f;
     private float spawnIntervalPowerUp = 120.0f;
 
-    // Nimby
-    private float startDelayNimby = 5.0f;
-    private float spawnIntervalNimby = 15.0f;
-
     public void StartSpawn()
     {
         // Invoke custom functions to spawn prefabs on a timed interval
         InvokeRepeating("SpawnFood", startDelayFood, spawnIntervalFood);
         InvokeRepeating("SpawnToken", startDelayToken, spawnIntervalToken);
         InvokeRepeating("SpawnPowerUp", startDelayPowerUp, spawnIntervalPowerUp);
-        InvokeRepeating("SpawnNimby", startDelayNimby, spawnIntervalNimby);
     }
     
     // Spawn food randomly into the play area
@@ -74,17 +68,6 @@ public class SpawnManager : MonoBehaviour
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRangePowerUp, spawnRangePowerUp), spawnY, Random.Range(-spawnRangePowerUp, spawnRangePowerUp));
 
             Instantiate(powerUpPrefab, spawnPos, powerUpPrefab.transform.rotation);
-        }
-    }
-
-    // Spawn NIMBYs randomly into the play area
-    void SpawnNimby()
-    {
-        if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
-        {
-            Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRangeFood));
-
-            Instantiate(nimbyPrefab, spawnPos, nimbyPrefab.transform.rotation);
         }
     }
 }
