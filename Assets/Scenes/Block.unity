@@ -440,14 +440,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178678199}
-  m_LocalRotation: {x: 0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0.25}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 1.8, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1051131442}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 5, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!114 &178678201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3951,6 +3951,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1900112565, guid: 473187f5619332445ba0e3a356be4e2b, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1900112565, guid: 473187f5619332445ba0e3a356be4e2b, type: 3}
+      propertyPath: m_ObstacleAvoidanceType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7071717535722781296, guid: 473187f5619332445ba0e3a356be4e2b, type: 3}
@@ -5667,7 +5671,6 @@ MonoBehaviour:
   foodPrefab: {fileID: 6471818291705101174, guid: 138fb68529dda514b8e9d533dc965966, type: 3}
   tokenPrefab: {fileID: 517209616308078684, guid: 18f7af37bf0167342b1c067a91bafe24, type: 3}
   powerUpPrefab: {fileID: 8965733328962906413, guid: 72b8f47a7b03a4d4797eff9d4d1836e6, type: 3}
-  nimbyPrefab: {fileID: 1698709165083191144, guid: c728560a58dce2843945070f828fc796, type: 3}
 --- !u!4 &2064728476
 Transform:
   m_ObjectHideFlags: 0
@@ -5692,10 +5695,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2064728474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c73655c9eea6240ad5968be6c7ce1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 88b0d781c095de943b216e6789534cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NimbyPrefab: {fileID: 6577518657515158330, guid: c728560a58dce2843945070f828fc796, type: 3}
+  player: {fileID: 0}
+  nimbyPrefab: {fileID: -626716556722992761, guid: c728560a58dce2843945070f828fc796, type: 3}
+  numberOfNimbys: 10
 --- !u!1 &2086417356
 GameObject:
   m_ObjectHideFlags: 0

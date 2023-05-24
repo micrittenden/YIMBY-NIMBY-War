@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraOrbit : MonoBehaviour
 {
     public Transform cameraJig;
-    private float rotateSpeed = 90;
+    private float rotateSpeed = 120;
 
     void LateUpdate()
     {

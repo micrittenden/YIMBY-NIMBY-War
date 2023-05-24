@@ -1486,7 +1486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644d40d8944632e489c87b4dc1e2a7b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpIndicator: {fileID: 0}
+  powerUpIndicator: {fileID: 5395629733842814470, guid: a2cb645a38dd7cc43a555cf474141d27, type: 3}
 --- !u!195 &1900112565
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1494,9 +1494,9 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7071717535723267664}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 1
@@ -1505,9 +1505,9 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!1 &7071717535723267668
 GameObject:

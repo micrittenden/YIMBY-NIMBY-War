@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     // Player speed and capabilities
     private float speed;
     private float baseSpeed = 6.0f;
-    private float lowSpeed = 3.0f;
-    private float maxSpeed = 9.0f;
+    private float lowSpeed = 4.0f;
+    private float maxSpeed = 8.0f;
     private bool slowedDown;
     private float slowedTime = 5.0f;
     private bool poweredUp;
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
             {
                 GameManager.Instance.DestroyNimby();
 
-                Destroy(collision.gameObject);
+               collision.gameObject.SetActive(false);
             }
             // NIMBYs attack you if you are not powered up but their effect does not stack
             else if (!slowedDown && !poweredUp)
