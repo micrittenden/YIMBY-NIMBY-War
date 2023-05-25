@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private float lowSpeed = 4.0f;
     private float maxSpeed = 8.0f;
     private bool slowedDown;
-    private float slowedTime = 5.0f;
+    public float slowedTime = 5.0f;
     private bool poweredUp;
     private float powerTime = 30.0f;
     public GameObject powerUpIndicator;

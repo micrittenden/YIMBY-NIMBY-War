@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private UIManager uiManagerScript;
     private PostProcessingBehaviour postProcessingBehaviourScript;
     private SoundEffects soundEffectsScript;
+    private PlayerController playerControllerScript;
     private SpawnManager spawnManagerScript;
     private NimbySpawner nimbySpawnerScript;
 
@@ -88,8 +89,9 @@ public class GameManager : MonoBehaviour
     {
         // Connect UI, SoundEffects, and SpawnManager
         uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
-        postProcessingBehaviourScript = GameObject.Find("Main Camera").GetComponent<PostProcessingBehaviour>();
+        postProcessingBehaviourScript = GameObject.Find("Global Post Processing").GetComponent<PostProcessingBehaviour>();
         soundEffectsScript = GameObject.Find("Player").GetComponent<SoundEffects>();
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         nimbySpawnerScript = GameObject.Find("SpawnManager").GetComponent<NimbySpawner>();
     }
@@ -211,6 +213,8 @@ public class GameManager : MonoBehaviour
         currentStamina -= nimbyStaminaDecrease;
         uiManagerScript.UpdateStaminaUI(currentStamina);
         postProcessingBehaviourScript.UpdateStaminaVignette(currentStamina);
+
+        postProcessingBehaviourScript.EnableChromaticAberration(playerControllerScript.slowedTime);
 
         tokenCount -= nimbyTokenSteal;
         uiManagerScript.UpdateTokenUI(tokenCount);
