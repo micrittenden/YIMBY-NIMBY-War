@@ -10,13 +10,15 @@ public class PostProcessingBehaviour : MonoBehaviour
 {
     public Volume volume;
     private Vignette vignette;
-    private ChromaticAberration chromatic;
+    private FilmGrain filmGrain;
+    private ChromaticAberration chromaticAbberation;
     private float staminaWarningLevel = 0.2f;
     
     void Start()
     {        
         volume.profile.TryGet<Vignette>(out vignette);
-        volume.profile.TryGet<ChromaticAberration>(out chromatic);
+        volume.profile.TryGet<FilmGrain>(out filmGrain);
+        volume.profile.TryGet<ChromaticAberration>(out chromaticAbberation);
     }
 
     public void UpdateStaminaVignette(int currentStamina)
@@ -26,17 +28,19 @@ public class PostProcessingBehaviour : MonoBehaviour
         {
             Debug.Log("Your stamina is dangerously low!");
             vignette.active = true;
+            filmGrain.active = true;
         }
         else
         {
             vignette.active = false;
+            filmGrain.active = false;
         }
     }
 
     public void EnableChromaticAberration(float duration = 0)
     {
         // Turn on chromatic aberration
-        chromatic.active = true;
+        chromaticAbberation.active = true;
 
         // If duration is not null
         if (duration != 0)
@@ -48,7 +52,7 @@ public class PostProcessingBehaviour : MonoBehaviour
     public void DisableChromaticAberration()
     {
         // Turn off chromatic aberration
-        chromatic.active = false;
+        chromaticAbberation.active = false;
     }
 
     public IEnumerator ChromaticAberrationCoroutine(float duration)
