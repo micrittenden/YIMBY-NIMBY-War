@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     // Connect to UI, SoundEffects, and SpawnManager
     private UIManager uiManagerScript;
+    private PostProcessingBehaviour postProcessingBehaviourScript;
     private SoundEffects soundEffectsScript;
     private SpawnManager spawnManagerScript;
     private NimbySpawner nimbySpawnerScript;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
     public int nimbyCount = 0;
 
     // Gameplay values
-    private int maxStamina = 300;
+    public int maxStamina = 300;
     private int depleteRateStamina = 1;
     private int foodValue = 60;
     private int foodPoints = 50;
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
         // Reset stamina to 0 in case the player got hit at the end
         currentStamina = 0;
         uiManagerScript.UpdateStaminaUI(currentStamina);
+        postProcessingBehaviourScript.UpdateStaminaVignette(currentStamina);
 
         uiManagerScript.UpdateGameOverUI(nimbyCount, score);
 
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour
     {
         // Connect UI, SoundEffects, and SpawnManager
         uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
+        postProcessingBehaviourScript = GameObject.Find("Main Camera").GetComponent<PostProcessingBehaviour>();
         soundEffectsScript = GameObject.Find("Player").GetComponent<SoundEffects>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         nimbySpawnerScript = GameObject.Find("SpawnManager").GetComponent<NimbySpawner>();
@@ -141,6 +144,7 @@ public class GameManager : MonoBehaviour
         {
             currentStamina = currentStamina - depleteRateStamina;
             uiManagerScript.UpdateStaminaUI(currentStamina);
+            postProcessingBehaviourScript.UpdateStaminaVignette(currentStamina);
         }
     }
 
@@ -158,6 +162,7 @@ public class GameManager : MonoBehaviour
         }
 
         uiManagerScript.UpdateStaminaUI(currentStamina);
+        postProcessingBehaviourScript.UpdateStaminaVignette(currentStamina);
 
         score += foodPoints;
         uiManagerScript.UpdateScoreUI(score);
@@ -205,6 +210,7 @@ public class GameManager : MonoBehaviour
 
         currentStamina -= nimbyStaminaDecrease;
         uiManagerScript.UpdateStaminaUI(currentStamina);
+        postProcessingBehaviourScript.UpdateStaminaVignette(currentStamina);
 
         tokenCount -= nimbyTokenSteal;
         uiManagerScript.UpdateTokenUI(tokenCount);

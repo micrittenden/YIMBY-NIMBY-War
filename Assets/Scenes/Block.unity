@@ -109,12 +109,12 @@ NavMeshSettings:
     agentRadius: 0.1
     agentHeight: 1
     agentSlope: 45
-    agentClimb: 0.4
+    agentClimb: 1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
-    manualCellSize: 0
-    cellSize: 0.033333335
+    manualCellSize: 1
+    cellSize: 0.05
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -501,7 +501,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -3925,6 +3925,7 @@ MonoBehaviour:
   score: 0
   tokenCount: 0
   nimbyCount: 0
+  maxStamina: 300
   _isGameActive: 0
   _isGameOver: 0
 --- !u!4 &1140495505
@@ -3999,6 +4000,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7071717535722781296, guid: 473187f5619332445ba0e3a356be4e2b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071717535723167979, guid: 473187f5619332445ba0e3a356be4e2b, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071717535723167979, guid: 473187f5619332445ba0e3a356be4e2b, type: 3}
+      propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7071717535723167980, guid: 473187f5619332445ba0e3a356be4e2b, type: 3}

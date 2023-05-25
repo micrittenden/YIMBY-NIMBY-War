@@ -63,7 +63,6 @@ public class UIManager : MonoBehaviour
         staminaSlider.value = currentStamina;
 
         staminaFill.color = staminaGradient.Evaluate(staminaSlider.normalizedValue);
-
     }
 
     public void UpdateScoreUI(int score)
