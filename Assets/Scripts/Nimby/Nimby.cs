@@ -1,5 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 // NIMBY is a class of poolable object
 public class Nimby : AutoDestroyPoolableObject
 {
@@ -8,17 +12,24 @@ public class Nimby : AutoDestroyPoolableObject
     public NavMeshAgent agent;
     public NimbyScriptableObject nimbyScriptableObject;
 
-    // Set up the NIMBY's NavMeshAgent each time it is enabled (ie, spawned)
-    public virtual void OnEnable()
+    public override void OnEnable()
     {
+        // Invoke the NIMBY to be returned to the pool after a specified time if it is not already hit by the player by then (AutoDestroyPoolableObject.cs)
+        base.OnEnable();
+
+        // Set up the NIMBY's NavMeshAgent each time it is spawned
         SetupAgentFromConfiguration();
     }
 
-    // Disable the NIMBY's NavMeshAgent so that it does not spawn in the same place the next time
     public override void OnDisable()
     {
+        // Return the NIMBY to its pool when it is disabled (PoolableObject.cs)
         base.OnDisable();
 
+        // Reset followCoroutine to null in NimbyController.cs so that the NIMBY will StartChasing() again when respawned
+        movement.followCoroutine = null;
+
+        // Disable the NIMBY's NavMeshAgent so that it does not spawn in the same place the next time
         agent.enabled = false;
     }
 

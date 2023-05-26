@@ -31,7 +31,6 @@ public class PostProcessingBehaviour : MonoBehaviour
         // Turn on or off the vignette depending on current stamina
         if (currentStamina <= (GameManager.Instance.maxStamina * staminaWarningLevel))
         {
-            Debug.Log("Your stamina is dangerously low!");
             vignette.active = true;
             filmGrain.active = true;
         }

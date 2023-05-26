@@ -35,19 +35,26 @@ public class ObjectPool
         }
     }
 
-    public PoolableObject GetObject()
-    {
-        PoolableObject instance = AvailableObjectsPool[0];
-
-        AvailableObjectsPool.RemoveAt(0);
-
-        instance.gameObject.SetActive(true);
-
-        return instance;
-    }
-
     public void ReturnObjectToPool(PoolableObject Object)
     {
         AvailableObjectsPool.Add(Object);
+    }
+
+    public PoolableObject GetObject()
+    {
+        if (AvailableObjectsPool.Count > 0)
+        {
+            PoolableObject instance = AvailableObjectsPool[0];
+
+            AvailableObjectsPool.RemoveAt(0);
+
+            instance.gameObject.SetActive(true);
+
+            return instance;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

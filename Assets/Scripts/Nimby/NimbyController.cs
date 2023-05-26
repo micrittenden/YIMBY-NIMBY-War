@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+//[RequireComponent(typeof(NavMeshAgent))]
 public class NimbyController : MonoBehaviour
 {
 	public Transform player;
@@ -14,7 +14,7 @@ public class NimbyController : MonoBehaviour
 	private float walkAnim = 0.3f;
 	private float idleAnim = 0f;
 
-	private Coroutine followCoroutine;
+	public Coroutine followCoroutine;
 
 	// Set up the NIMBY
 	private void Awake()
@@ -25,7 +25,7 @@ public class NimbyController : MonoBehaviour
 		nimbyAnim = GetComponentInChildren<Animator>();
 	}
 
-	// Chase the player if not already chasing the player
+	// Chase the player if not already chasing the player. This is reset to null when the NIMBY is disabled in Nimby.cs OnDisable()
 	public void StartChasing()
 	{
 		if (followCoroutine == null)
