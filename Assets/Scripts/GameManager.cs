@@ -37,11 +37,12 @@ public class GameManager : MonoBehaviour
     public int maxStamina = 300;
     private int depleteRateStamina = 1;
     private int foodValue = 60;
-    private int foodPoints = 50;
-    private int tokenPoints = 300;
-    private int powerUpPoints = 350;
-    private int nimbyPoints = 600;
-    private int nimbyStaminaDecrease = 60;
+    private int foodPoints = 200;
+    private int tokenValue = 5;
+    private int tokenPoints = 500;
+    private int powerUpPoints = 750;
+    private int nimbyPoints = 1000;
+    private int nimbyStaminaDecrease = 30;
     private int nimbyTokenSteal = 2;
 
     // Game active classes to pause game while menus are open
@@ -172,6 +173,9 @@ public class GameManager : MonoBehaviour
         uiManagerScript.UpdateStaminaUI(currentStamina);
         postProcessingBehaviourScript.UpdateStaminaVignette(currentStamina);
 
+        tokenCount--;
+        uiManagerScript.UpdateTokenUI(tokenCount);
+
         score += foodPoints;
         uiManagerScript.UpdateScoreUI(score);
 
@@ -183,7 +187,7 @@ public class GameManager : MonoBehaviour
     {
         soundEffectsScript.playTokenSound();
 
-        tokenCount++;
+        tokenCount += tokenValue;
         uiManagerScript.UpdateTokenUI(tokenCount);
 
         score += tokenPoints;

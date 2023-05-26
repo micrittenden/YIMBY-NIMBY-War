@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6450929528452582802}
   - component: {fileID: 6472997740841924054}
   - component: {fileID: -4575962663904279736}
+  - component: {fileID: -3004966063937907243}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -112,3 +113,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 90
   rotationDirection: {x: 0, y: -1, z: 0}
+--- !u!114 &-3004966063937907243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6471818291705101174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f203a5cf7037bb4fabee87f69c27efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AutoDestroyTime: 90

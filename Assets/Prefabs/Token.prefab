@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2030423145728059785}
   - component: {fileID: 4222009338528241918}
   - component: {fileID: 2309725387888580}
+  - component: {fileID: 7789126301475257843}
   m_Layer: 0
   m_Name: Token
   m_TagString: Token
@@ -112,3 +113,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 90
   rotationDirection: {x: 0, y: -1, z: 0}
+--- !u!114 &7789126301475257843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517209616308078684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9edd537866e844e4293ebd844b9c42d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AutoDestroyTime: 60

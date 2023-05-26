@@ -5732,9 +5732,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08755bae0371104e994da8571d9f107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodPrefab: {fileID: 6471818291705101174, guid: 138fb68529dda514b8e9d533dc965966, type: 3}
-  tokenPrefab: {fileID: 517209616308078684, guid: 18f7af37bf0167342b1c067a91bafe24, type: 3}
-  powerUpPrefab: {fileID: 8965733328962906413, guid: 72b8f47a7b03a4d4797eff9d4d1836e6, type: 3}
+  foodPrefab: {fileID: -3004966063937907243, guid: 138fb68529dda514b8e9d533dc965966, type: 3}
+  tokenPrefab: {fileID: 7789126301475257843, guid: 18f7af37bf0167342b1c067a91bafe24, type: 3}
+  powerUpPrefab: {fileID: -8977835412290082406, guid: 72b8f47a7b03a4d4797eff9d4d1836e6, type: 3}
+  numberOfFoods: 20
+  numberOfTokens: 35
+  numberOfPowerUps: 6
 --- !u!4 &2064728476
 Transform:
   m_ObjectHideFlags: 0

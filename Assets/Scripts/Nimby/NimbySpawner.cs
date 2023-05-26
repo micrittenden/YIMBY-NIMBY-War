@@ -10,7 +10,6 @@ public class NimbySpawner : MonoBehaviour
     public int numberOfNimbys = 10;
     private float startDelayNimby = 5.0f;
     private float spawnIntervalNimby = 15.0f;
-    private float spawnRange = 24.0f;
     private ObjectPool nimbyPool;
 
     private NavMeshTriangulation triangulation;
@@ -22,7 +21,7 @@ public class NimbySpawner : MonoBehaviour
         nimbyPool = ObjectPool.CreateInstance(nimbyPrefab, numberOfNimbys);
     }
 
-    // Spawn NIMBYs on a repeating interval when the game is started
+    // Spawn NIMBYs on a repeating interval using a custom function when the game is started
     public void StartSpawn()
     {
         triangulation = NavMesh.CalculateTriangulation();

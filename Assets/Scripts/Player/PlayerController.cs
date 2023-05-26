@@ -114,13 +114,13 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.EatFood();
 
-            Destroy(other.gameObject);
+           other.gameObject.SetActive(false);
         }
         else if (other.CompareTag("Token") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
             GameManager.Instance.PickUpToken();
 
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
         else if (other.CompareTag("Power Up") && GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())
         {
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(PoweredUpCountRoutine());
 
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 
@@ -146,8 +146,8 @@ public class PlayerController : MonoBehaviour
             if (poweredUp)
             {
                 GameManager.Instance.DestroyNimby();
-
-               collision.gameObject.SetActive(false);
+                
+                collision.gameObject.SetActive(false);
             }
             // NIMBYs attack you if you are not powered up but their effect does not stack
             else if (!slowedDown && !poweredUp)

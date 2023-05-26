@@ -2,7 +2,7 @@ public class AutoDestroyPoolableObject : PoolableObject
 {
     public float AutoDestroyTime = 140f;
 
-    private const string DisableMethodName = "Disable";
+    protected const string DisableMethodName = "Disable";
 
     public virtual void OnEnable()
     {
