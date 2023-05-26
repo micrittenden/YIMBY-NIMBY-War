@@ -1,7 +1,9 @@
 using UnityEngine.AI;
 
+// NIMBY is a class of poolable object
 public class Nimby : AutoDestroyPoolableObject
 {
+    // All assigned in the inspector
     public NimbyController movement;
     public NavMeshAgent agent;
     public NimbyScriptableObject nimbyScriptableObject;

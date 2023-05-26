@@ -10,12 +10,12 @@ public class CameraOrbit : MonoBehaviour
     // Rotate the camera around the player
     void LateUpdate()
     {
-        if(Input.GetKey (KeyCode.E))
+        if (Input.GetKey (KeyCode.E))
         {
             transform.RotateAround(cameraJig.position, Vector3.up, rotateSpeed * Time.deltaTime);
         }
 
-        if(Input.GetKey (KeyCode.Q))
+        if (Input.GetKey (KeyCode.Q))
         {
             transform.RotateAround(cameraJig.position, -Vector3.up, rotateSpeed * Time.deltaTime);
         }
