@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
         _instance = this;
     }
 
+    // Set up references to the other scripts
     void Start()
     {
         // Connect UI, SoundEffects, and SpawnManager
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // If the game is active, check if it should actually be game over
     void Update()
     {
         if (IsGameActive())
@@ -124,6 +126,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Check if the game is over
     void CheckGameOver()
     {
         // End the game if the player stamina is 0
@@ -133,13 +136,15 @@ public class GameManager : MonoBehaviour
             GameOver(true);
         }
     }
-
+    
+    // Assign the max stamina value to the player and update it in the UI
     void SetMaxStamina(int maxStamina)
     {
         currentStamina = maxStamina;
         uiManagerScript.SetMaxStaminaUI(maxStamina);
     }
 
+    // Deplete player stamina at a specified rate as the game continues and update it in the UI
     void DepleteStamina()
     {
         if (IsGameActive() && !IsGameOver())
@@ -150,6 +155,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Recover player stamina and increase score when they eat food, update it in the UI and post processing, and play a sound
     public void EatFood()
     {
         soundEffectsScript.playOtherSound();
@@ -172,6 +178,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("You eat some food.");
     }
 
+    // Increase the token count and score when the player picks up a token, and play a sound
     public void PickUpToken()
     {
         soundEffectsScript.playTokenSound();
@@ -185,6 +192,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("You pick up a token.");
     }
 
+    // Increase the score when the player picks up a power up and play a sound
     public void PowerUp()
     {
         soundEffectsScript.playOtherSound();
@@ -195,6 +203,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("You power up!");
     }
 
+    // Increase the score and nimby count when the player collides with a NIMBY while powered up, update it in the UI, and play a sound
     public void DestroyNimby()
     {
         soundEffectsScript.playDestroyNimbySound();
@@ -206,6 +215,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("The NIMBY yielded to socially productive growth!");
     }
 
+    // Decrease stamina and token count when the player is hit by a NIMBY while not powered up, update it in the UI and post processing, and play a sound
     public void AttackedByNimby()
     {
         soundEffectsScript.playNimbyAttackSound();

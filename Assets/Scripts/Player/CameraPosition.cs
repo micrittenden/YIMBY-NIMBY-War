@@ -9,6 +9,7 @@ public class CameraPosition : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector3 offset;
 
+    // Move the camera with the player
     void LateUpdate()
     {
         transform.position = Vector3.SmoothDamp(transform.position, player.position + offset, ref velocity, smoothSpeed * Time.deltaTime);

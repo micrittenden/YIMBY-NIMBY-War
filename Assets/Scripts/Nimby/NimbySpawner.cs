@@ -15,19 +15,21 @@ public class NimbySpawner : MonoBehaviour
 
     private NavMeshTriangulation triangulation;
 
+    // Set up the NIMBY spawn pool and player reference
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         nimbyPool = ObjectPool.CreateInstance(nimbyPrefab, numberOfNimbys);
     }
 
+    // Spawn NIMBYs on a repeating interval when the game is started
     public void StartSpawn()
     {
         triangulation = NavMesh.CalculateTriangulation();
         InvokeRepeating("SpawnNimby", startDelayNimby, spawnIntervalNimby);
     }
 
-    // Spawn NIMBYs randomly into the play area
+    // Spawn NIMBYs randomly into the play area and start chasing them using the function in the Nimby class
     void SpawnNimby()
     {
         if (GameManager.Instance.IsGameActive() && !GameManager.Instance.IsGameOver())

@@ -7,6 +7,7 @@ public class CameraOrbit : MonoBehaviour
     public Transform cameraJig;
     private float rotateSpeed = 120;
 
+    // Rotate the camera around the player
     void LateUpdate()
     {
         if(Input.GetKey (KeyCode.E))

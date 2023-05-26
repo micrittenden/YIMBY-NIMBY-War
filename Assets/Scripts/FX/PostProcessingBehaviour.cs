@@ -15,12 +15,17 @@ public class PostProcessingBehaviour : MonoBehaviour
     private float staminaWarningLevel = 0.2f;
     
     void Start()
-    {        
+    {
+        // Prevent the DebugUpdater from being created, or disable it if it already exists. It is useless for this type of build.
+        UnityEngine.Rendering.DebugManager.instance.enableRuntimeUI = false;
+
+        // Access the various overrides in the volume
         volume.profile.TryGet<Vignette>(out vignette);
         volume.profile.TryGet<FilmGrain>(out filmGrain);
         volume.profile.TryGet<ChromaticAberration>(out chromaticAbberation);
     }
 
+    // Add the red vignette and grainy effect when stamina is below a specified threshold
     public void UpdateStaminaVignette(int currentStamina)
     {
         // Turn on or off the vignette depending on current stamina
@@ -37,6 +42,7 @@ public class PostProcessingBehaviour : MonoBehaviour
         }
     }
 
+    // Add the chromatic aberration and call functions to turn it off after a specified time
     public void EnableChromaticAberration(float duration = 0)
     {
         // Turn on chromatic aberration

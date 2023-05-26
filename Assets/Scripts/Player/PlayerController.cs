@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Move the player in relation to the direction the camera is facing
     private void MovePlayerRelativeToCamera()
     {
         // Get player input

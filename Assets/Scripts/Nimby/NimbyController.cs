@@ -16,6 +16,7 @@ public class NimbyController : MonoBehaviour
 
 	private Coroutine followCoroutine;
 
+	// Set up the NIMBY
 	private void Awake()
 	{
 		player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -24,6 +25,7 @@ public class NimbyController : MonoBehaviour
 		nimbyAnim = GetComponentInChildren<Animator>();
 	}
 
+	// Chase the player if not already chasing the player
 	public void StartChasing()
 	{
 		if (followCoroutine == null)
@@ -32,6 +34,7 @@ public class NimbyController : MonoBehaviour
 		}
 	}
 
+	// Set destination, speed, animation, and destination update rate for chasing the player
 	private IEnumerator FollowTarget()
 	{
 		WaitForSeconds Wait = new WaitForSeconds(updateRate);

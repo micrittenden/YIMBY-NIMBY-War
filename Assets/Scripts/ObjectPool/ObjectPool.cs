@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Set up the basic functionality for the object pool class
 public class ObjectPool
 {
     private PoolableObject Prefab;
