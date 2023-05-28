@@ -70,8 +70,11 @@ public class GameManager : MonoBehaviour
         uiManagerScript.UpdateStaminaUI(currentStamina);
         postProcessingBehaviourScript.UpdateStaminaVignette(currentStamina);
 
-        uiManagerScript.UpdateGameOverUI(nimbyCount, score);
+        // Update the high score. This will show the next time the user plays the game.
+        CheckHighScore();
 
+        // Show game over screen
+        uiManagerScript.UpdateGameOverUI(nimbyCount, score);
         uiManagerScript.GameOverScreenOn();
     }
 
@@ -96,6 +99,9 @@ public class GameManager : MonoBehaviour
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         nimbySpawnerScript = GameObject.Find("SpawnManager").GetComponent<NimbySpawner>();
+
+        // Update the high score in the UI
+        uiManagerScript.UpdateHighScoreUI();
     }
 
     // Start the game when the start button is clicked
@@ -135,6 +141,17 @@ public class GameManager : MonoBehaviour
         {
             GameActive(false);
             GameOver(true);
+        }
+    }
+
+    // Update the high score (saved locally), though the UI will be updated at the start of the game so that we do not need to declare a variable
+    public void CheckHighScore()
+    {
+        if (score > PlayerPrefs.GetInt("HighScore", 0)) // Add the 0 in case there is no high score yet
+        {
+            Debug.Log("Hello");
+            PlayerPrefs.SetInt("HighScore", score);
+            Debug.Log("Hello2");
         }
     }
     

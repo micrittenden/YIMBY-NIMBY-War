@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public Image staminaFill;
 
     [SerializeField] TMP_Text scoreText;
+    [SerializeField] TMP_Text highScoreText;
     [SerializeField] TMP_Text tokenText;
     [SerializeField] TMP_Text gameOverText;
 
@@ -68,6 +69,12 @@ public class UIManager : MonoBehaviour
     public void UpdateScoreUI(int score)
     {
         scoreText.text = "Score: " + score;
+    }
+
+    // This is a PlayerPrefs so do not need to pass a variable
+    public void UpdateHighScoreUI()
+    {
+        highScoreText.text = $"High Score: {PlayerPrefs.GetInt("HighScore", 0)}";
     }
 
     public void UpdateTokenUI(int tokenCount)
